@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#ffd6ea" />
+<title>想你小屋 · 双双小猫和刘博华小鸭</title>
+<style>
+  :root{
+    --pink-1:#fff2f8;
+    --pink-2:#ffd8eb;
+    --pink-3:#ff9bc5;
+    --pink-4:#ff6fa9;
+    --blue-1:#edf8ff;
+    --blue-2:#cdeeff;
+    --blue-3:#88ccff;
+    --blue-4:#4aa8e8;
+    --cream:#fff8df;
+    --paper:#fffdf2;
+    --wood:#b97843;
+    --wood-dark:#643b28;
+    --wood-mid:#895533;
+    --ink:#4c3340;
+    --line:#4e3040;
+    --leaf:#80c984;
+    --leaf-dark:#57945b;
+    --yellow:#ffd969;
+    --duck:#ffd75b;
+    --duck-deep:#f2ad31;
+    --cat:#fff3ec;
+    --shadow:rgba(77,46,58,.23);
+    --soft-shadow:rgba(109,70,90,.16);
+    --radius:22px;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:rgba(255,111,169,.18)}
+  html,body{margin:0;min-height:100%;color:var(--ink);font-family:"Courier New","PingFang SC","Microsoft YaHei",monospace;}
+  body{
+    overflow-x:hidden;
+    background:
+      radial-gradient(circle at 14% 12%, #fff 0 17px, transparent 18px),
+      radial-gradient(circle at 22% 12%, #fff 0 24px, transparent 25px),
+      radial-gradient(circle at 30% 13%, #fff 0 16px, transparent 17px),
+      radial-gradient(circle at 76% 18%, #fff 0 18px, transparent 19px),
+      radial-gradient(circle at 84% 17%, #fff 0 28px, transparent 29px),
+      linear-gradient(180deg,#ffd6ea 0%,#dff5ff 38%,#bdefff 58%,#a6df9e 58%,#74bf6d 100%);
+    image-rendering:pixelated;
+  }
+  body:before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.33;
+    background:
+      linear-gradient(90deg,transparent 0 13px,rgba(255,255,255,.35) 13px 14px,transparent 14px 28px),
+      linear-gradient(transparent 0 13px,rgba(255,255,255,.25) 13px 14px,transparent 14px 28px);
+    background-size:28px 28px;
+    mask:linear-gradient(to bottom,#000 0 55%,transparent 72%);
+  }
+  body:after{
+    content:"";position:fixed;left:0;right:0;bottom:0;height:31vh;z-index:0;pointer-events:none;
+    background:
+      repeating-linear-gradient(90deg,rgba(58,120,53,.24) 0 8px,transparent 8px 18px),
+      radial-gradient(circle at 12% 64%,#ffbed9 0 4px,transparent 5px),
+      radial-gradient(circle at 23% 79%,#fff 0 3px,transparent 4px),
+      radial-gradient(circle at 41% 60%,#ffd76b 0 3px,transparent 4px),
+      radial-gradient(circle at 78% 76%,#ffbed9 0 4px,transparent 5px),
+      linear-gradient(180deg,rgba(255,255,255,0),rgba(31,104,46,.26));
+  }
+
+  .app{position:relative;z-index:1;min-height:100svh;padding:18px 12px 26px;display:flex;justify-content:center;align-items:flex-start;}
+  .shell{width:min(460px,100%);position:relative;}
+
+  .sign{
+    margin:0 auto 12px;width:88%;border:4px solid var(--wood-dark);border-radius:20px;
+    background:linear-gradient(#c98a54,#a7653d);box-shadow:0 7px 0 var(--wood-dark),0 16px 30px var(--shadow);
+    padding:12px 14px 11px;text-align:center;color:#fff8d9;text-shadow:2px 2px 0 var(--wood-dark);position:relative;
+  }
+  .sign:before,.sign:after{content:"";position:absolute;bottom:-20px;width:10px;height:20px;background:var(--wood-dark);}
+  .sign:before{left:30px}.sign:after{right:30px}
+  .sign h1{margin:0;font-size:25px;letter-spacing:1px;line-height:1.12;font-weight:900;}
+  .sign p{margin:5px 0 0;font-size:11px;opacity:.95;}
+
+  .game-card{
+    border:4px solid var(--line);border-radius:28px;background:var(--paper);box-shadow:0 9px 0 #6b4150,0 22px 42px var(--shadow);overflow:hidden;
+  }
+  .scene{
+    padding:17px 14px 15px;position:relative;overflow:hidden;border-bottom:4px solid var(--line);
+    background:
+      radial-gradient(circle at 18% 18%,rgba(255,255,255,.82) 0 14px,transparent 15px),
+      radial-gradient(circle at 79% 23%,rgba(255,255,255,.82) 0 18px,transparent 19px),
+      linear-gradient(180deg,var(--blue-2) 0 57%,#b8eaa6 57% 100%);
+  }
+  .scene:before{
+    content:"";position:absolute;left:-18%;right:-18%;bottom:-30px;height:96px;background:#79c775;border-top:4px solid #5aa75e;border-radius:50% 50% 0 0;opacity:.96;
+  }
+  .scene-inner{position:relative;z-index:1;border:3px solid rgba(78,48,64,.9);border-radius:22px;background:rgba(255,253,239,.75);box-shadow:0 5px 0 rgba(100,59,40,.32);padding:13px 10px 11px;}
+
+  .cottage-wrap{display:grid;grid-template-columns:1fr 122px 1fr;gap:8px;align-items:end;min-height:205px;}
+  .sprite-side{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;}
+  .nameplate{
+    border:3px solid var(--line);border-radius:13px;background:#fff7e2;box-shadow:3px 3px 0 #d7a06b;
+    padding:6px 8px;text-align:center;font-weight:900;font-size:12px;line-height:1.2;white-space:nowrap;
+  }
+  .nameplate small{display:block;font-size:10px;font-weight:800;color:#876271;margin-top:2px;}
+
+  .cottage{width:122px;height:138px;position:relative;margin:0 auto;filter:drop-shadow(5px 6px 0 rgba(78,48,64,.22));}
+  .roof{position:absolute;left:8px;top:0;width:106px;height:56px;background:#ff9bc5;border:4px solid var(--line);clip-path:polygon(50% 0,100% 74%,91% 100%,9% 100%,0 74%);}
+  .roof:after{content:"";position:absolute;left:15px;right:15px;bottom:5px;height:8px;background:#ff6fa9;box-shadow:0 -14px 0 rgba(255,255,255,.25);}
+  .house{position:absolute;left:18px;top:44px;width:86px;height:82px;background:#fff8db;border:4px solid var(--line);border-radius:8px;}
+  .door{position:absolute;left:39px;top:78px;width:28px;height:48px;background:#87cfff;border:4px solid var(--line);border-radius:8px 8px 0 0;}
+  .door:after{content:"";position:absolute;right:4px;top:22px;width:5px;height:5px;background:#fff6b8;border:2px solid var(--line);border-radius:50%;}
+  .window{position:absolute;top:61px;width:24px;height:22px;background:#b7edff;border:4px solid var(--line);box-shadow:inset 9px 0 0 rgba(255,255,255,.36),inset 0 7px 0 rgba(255,255,255,.36);}
+  .window.left{left:25px}.window.right{right:25px}
+  .flowers{position:absolute;left:7px;right:7px;bottom:0;height:18px;background:repeating-linear-gradient(90deg,#57945b 0 4px,transparent 4px 9px);}
+  .flowers:before{content:"✿ ✦ ✿";position:absolute;left:18px;top:-8px;color:#ff6fa9;font-size:14px;text-shadow:12px 5px 0 #ffd969,36px 2px 0 #88ccff;}
+
+  .pixel-svg{width:86px;height:86px;display:block;filter:drop-shadow(4px 5px 0 rgba(78,48,64,.22));}
+  .cat-card,.duck-card{position:relative;}
+  .cat-card:after,.duck-card:after{content:"";position:absolute;left:50%;bottom:4px;transform:translateX(-50%);width:82px;height:14px;border-radius:50%;background:rgba(78,48,64,.13);z-index:-1;}
+
+  .heart-area{display:flex;justify-content:center;margin-top:-10px;margin-bottom:14px;position:relative;z-index:3;}
+  .heart-btn{
+    appearance:none;border:0;background:transparent;padding:0;margin:0;cursor:pointer;touch-action:manipulation;position:relative;outline:none;
+  }
+  .heart-btn:focus-visible .heart-box{outline:4px solid rgba(74,168,232,.55);outline-offset:4px;}
+  .heart-box{
+    width:154px;height:154px;border:4px solid var(--line);border-radius:28px;
+    background:linear-gradient(180deg,#fff5c9,#ffd98a 54%,#ffc975 100%);
+    box-shadow:0 8px 0 #8d5636, inset 0 0 0 5px rgba(255,255,255,.42),0 18px 30px var(--soft-shadow);
+    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  }
+  .heart-box:before{content:"";position:absolute;left:15px;right:15px;top:15px;height:22px;border-radius:16px;background:rgba(255,255,255,.34);}
+  .heart-box:after{content:"TAP";position:absolute;bottom:11px;left:50%;transform:translateX(-50%);font-weight:900;font-size:13px;color:#784b42;text-shadow:1px 1px 0 #fff;letter-spacing:1px;}
+  .heart-svg{width:102px;height:92px;position:relative;z-index:1;transition:filter .14s ease;}
+  .heart-btn:active .heart-box{transform:translateY(5px);box-shadow:0 3px 0 #8d5636,inset 0 0 0 5px rgba(255,255,255,.42),0 10px 20px var(--soft-shadow);}
+  .heart-btn.lit .heart-box{animation:heartJump .36s steps(3,end);background:linear-gradient(180deg,#fff8d6,#ffe58f 50%,#ffc0df 100%);}
+  .heart-btn.lit .heart-svg{filter:brightness(1.28) saturate(1.22) drop-shadow(0 0 8px rgba(255,111,169,.45));}
+  @keyframes heartJump{0%{transform:translateY(0) scale(1)}45%{transform:translateY(-10px) scale(1.04)}100%{transform:translateY(0) scale(1)}}
+
+  .panel{padding:16px 14px 18px;background:linear-gradient(180deg,#fffdf2,#fff2fa 52%,#eef9ff);}
+  .role-title{font-size:13px;font-weight:900;margin:0 0 10px;color:#6f4d5b;}
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .role{
+    appearance:none;border:3px solid var(--line);border-radius:18px;background:#fff8e7;padding:9px 8px;min-height:72px;display:flex;align-items:center;gap:8px;text-align:left;cursor:pointer;color:var(--ink);
+    box-shadow:0 5px 0 #c98861;position:relative;overflow:hidden;touch-action:manipulation;font:inherit;
+  }
+  .role:before{content:"";position:absolute;right:-12px;top:-12px;width:52px;height:52px;border-radius:50%;background:rgba(255,155,197,.22);}
+  .role.active{background:linear-gradient(135deg,#ffe0f0,#e5f7ff);box-shadow:0 5px 0 #6db9e8;transform:translateY(1px);}
+  .role:active{transform:translateY(4px);box-shadow:0 2px 0 #6db9e8;}
+  .role-icon{width:42px;height:42px;border:3px solid var(--line);border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:3px 3px 0 rgba(78,48,64,.16);flex:0 0 auto;}
+  .role b{font-size:14px;display:block;line-height:1.18;position:relative;z-index:1;}
+  .role span span{display:block;font-size:10px;font-weight:700;color:#886273;margin-top:3px;position:relative;z-index:1;}
+
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .stat{
+    border:3px solid var(--line);border-radius:18px;background:#fffdf4;box-shadow:0 5px 0 #d7a06b;padding:11px 10px;position:relative;overflow:hidden;min-height:96px;
+  }
+  .stat.cat{background:linear-gradient(180deg,#fff7fb,#ffe2f0)}
+  .stat.duck{background:linear-gradient(180deg,#f2fbff,#dff3ff)}
+  .stat.total{grid-column:1 / -1;background:linear-gradient(135deg,#fff3c7,#ffe0f0 48%,#dff3ff);min-height:88px;}
+  .stat:before{content:"";position:absolute;right:-18px;bottom:-18px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.5);}
+  .stat label{display:block;font-size:11px;font-weight:900;color:#755263;position:relative;z-index:1;line-height:1.35;}
+  .stat strong{display:block;font-size:34px;font-weight:900;margin:4px 0 2px;text-shadow:2px 2px 0 rgba(255,255,255,.9);position:relative;z-index:1;line-height:1;}
+  .stat em{font-style:normal;font-size:11px;font-weight:800;color:#8a6674;position:relative;z-index:1;}
+
+  .diary{margin-top:13px;border:4px solid var(--line);border-radius:22px;background:#74452f;box-shadow:0 6px 0 #503020;padding:10px;color:#fff8d7;text-shadow:2px 2px 0 #3a241d;}
+  .diary-title{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900;margin-bottom:7px;}
+  .diary-body{border:2px dashed #ffd98a;border-radius:14px;min-height:58px;padding:10px;background:rgba(0,0,0,.08);font-weight:900;line-height:1.5;font-size:14px;}
+  .log{margin-top:9px;display:flex;flex-direction:column;gap:6px;max-height:118px;overflow:auto;overscroll-behavior:contain;}
+  .log-item{border:2px solid var(--line);border-radius:12px;background:#fff9e7;color:#59404b;text-shadow:none;font-size:12px;line-height:1.4;padding:7px 8px;box-shadow:2px 2px 0 #d4a06b;}
+
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;}
+  .tool{
+    appearance:none;border:3px solid var(--line);border-radius:16px;background:#dff4ff;color:#4a3340;box-shadow:0 5px 0 #77badd;padding:10px 8px;font:inherit;font-weight:900;cursor:pointer;touch-action:manipulation;
+  }
+  .tool.pink{background:#ffe1ef;box-shadow:0 5px 0 #e487ac;}
+  .tool:active{transform:translateY(4px);box-shadow:0 1px 0 #77badd;}
+  .hint{margin-top:11px;border:2px solid #e5b3c9;border-radius:16px;background:rgba(255,255,255,.62);padding:10px;font-size:11px;line-height:1.55;color:#7d5d6b;}
+
+  .float-layer{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:hidden;}
+  .floaty{position:absolute;font-weight:900;animation:floatUp 960ms ease-out forwards;text-shadow:2px 2px 0 rgba(78,48,64,.24);}
+  @keyframes floatUp{0%{opacity:0;transform:translate(-50%,0) scale(.6)}18%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)), -138px) scale(1.45)}}
+
+  .toast{position:fixed;left:50%;bottom:22px;z-index:80;transform:translateX(-50%) translateY(24px);opacity:0;pointer-events:none;border:3px solid var(--line);border-radius:16px;background:#fff8e2;box-shadow:0 5px 0 #b97843;padding:10px 13px;font-size:13px;font-weight:900;color:#583946;transition:.22s ease;max-width:min(92vw,420px);text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .modal-mask{display:none;position:fixed;inset:0;z-index:90;background:rgba(51,31,42,.48);padding:18px;align-items:center;justify-content:center;}
+  .modal-mask.show{display:flex;}
+  .modal{width:min(440px,100%);border:4px solid var(--line);border-radius:24px;background:#fff8e8;box-shadow:0 8px 0 #6b4150;padding:16px;}
+  .modal h2{margin:0 0 8px;font-size:20px;}
+  .modal p{margin:0 0 12px;font-size:13px;line-height:1.6;color:#6f5360;}
+  .modal code{display:block;white-space:pre-wrap;border:3px solid var(--line);border-radius:16px;background:#fffdf5;padding:10px;font-size:11px;line-height:1.45;color:#503947;}
+  .modal .tool{width:100%;margin-top:12px;}
+
+  @media(max-width:390px){
+    .app{padding:14px 10px 22px}.sign{width:92%}.sign h1{font-size:22px}.cottage-wrap{grid-template-columns:1fr 104px 1fr;gap:4px}.cottage{width:104px;transform:scale(.88)}.pixel-svg{width:76px;height:76px}.nameplate{font-size:11px;padding:5px 6px}.heart-box{width:138px;height:138px}.heart-svg{width:90px;height:82px}.roles{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.stat.total{grid-column:auto}.tools{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="float-layer" id="floatLayer"></div>
+<div class="toast" id="toast">已经敲进小屋啦</div>
+<main class="app">
+  <div class="shell">
+    <header class="sign">
+      <h1>想你小屋</h1>
+      <p>双双小猫 · 刘博华小鸭 · pink & blue pixel room</p>
+    </header>
+
+    <section class="game-card" aria-label="想你小屋计数器">
+      <div class="scene">
+        <div class="scene-inner">
+          <div class="cottage-wrap">
+            <div class="sprite-side cat-card">
+              <svg class="pixel-svg" viewBox="0 0 32 32" shape-rendering="crispEdges" aria-label="双双小猫图案">
+                <rect width="32" height="32" fill="none"/>
+                <rect x="6" y="7" width="4" height="5" fill="#4e3040"/><rect x="7" y="8" width="2" height="3" fill="#fff3ec"/>
+                <rect x="22" y="7" width="4" height="5" fill="#4e3040"/><rect x="23" y="8" width="2" height="3" fill="#fff3ec"/>
+                <rect x="8" y="10" width="16" height="14" fill="#4e3040"/>
+                <rect x="9" y="11" width="14" height="12" fill="#fff3ec"/>
+                <rect x="12" y="14" width="2" height="2" fill="#4e3040"/><rect x="18" y="14" width="2" height="2" fill="#4e3040"/>
+                <rect x="15" y="17" width="2" height="1" fill="#ff8eb8"/><rect x="13" y="19" width="2" height="1" fill="#4e3040"/><rect x="17" y="19" width="2" height="1" fill="#4e3040"/>
+                <rect x="10" y="18" width="2" height="1" fill="#ffc5da"/><rect x="20" y="18" width="2" height="1" fill="#ffc5da"/>
+                <rect x="7" y="23" width="18" height="5" fill="#4e3040"/><rect x="8" y="23" width="16" height="4" fill="#ffd8eb"/>
+                <rect x="3" y="21" width="6" height="2" fill="#4e3040"/><rect x="23" y="21" width="6" height="2" fill="#4e3040"/>
+                <rect x="10" y="27" width="3" height="3" fill="#4e3040"/><rect x="19" y="27" width="3" height="3" fill="#4e3040"/>
+                <rect x="4" y="5" width="4" height="3" fill="#ff6fa9"/><rect x="8" y="6" width="3" height="2" fill="#ff9bc5"/>
+              </svg>
+              <div class="nameplate">双双小猫<small>meow miss</small></div>
+            </div>
+
+            <div class="cottage" aria-label="粉蓝像素小屋">
+              <div class="roof"></div><div class="house"></div><div class="window left"></div><div class="window right"></div><div class="door"></div><div class="flowers"></div>
+            </div>
+
+            <div class="sprite-side duck-card">
+              <svg class="pixel-svg" viewBox="0 0 32 32" shape-rendering="crispEdges" aria-label="刘博华小鸭图案">
+                <rect width="32" height="32" fill="none"/>
+                <rect x="9" y="8" width="14" height="13" fill="#4e3040"/>
+                <rect x="10" y="9" width="12" height="11" fill="#ffd75b"/>
+                <rect x="12" y="12" width="2" height="2" fill="#4e3040"/><rect x="18" y="12" width="2" height="2" fill="#4e3040"/>
+                <rect x="14" y="16" width="4" height="2" fill="#4e3040"/><rect x="14" y="16" width="4" height="1" fill="#f2ad31"/>
+                <rect x="7" y="20" width="18" height="7" fill="#4e3040"/><rect x="8" y="20" width="16" height="6" fill="#ffd75b"/>
+                <rect x="6" y="21" width="4" height="4" fill="#4e3040"/><rect x="22" y="21" width="4" height="4" fill="#4e3040"/>
+                <rect x="8" y="26" width="16" height="2" fill="#88ccff"/><rect x="10" y="28" width="4" height="2" fill="#f2ad31"/><rect x="18" y="28" width="4" height="2" fill="#f2ad31"/>
+                <rect x="12" y="5" width="8" height="4" fill="#4e3040"/><rect x="13" y="6" width="6" height="2" fill="#87cfff"/>
+              </svg>
+              <div class="nameplate">刘博华小鸭<small>quack miss</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="heart-area">
+          <button type="button" class="heart-btn" id="heartBtn" onclick="tapMiss(event)" ontouchend="tapMiss(event)" aria-label="敲一下想念爱心">
+            <span class="heart-box">
+              <svg class="heart-svg" viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true" id="heartSvg">
+                <rect x="3" y="0" width="3" height="1" fill="#ff8ab8"/><rect x="10" y="0" width="3" height="1" fill="#ff8ab8"/>
+                <rect x="2" y="1" width="5" height="1" fill="#ff6fa9"/><rect x="9" y="1" width="5" height="1" fill="#ff6fa9"/>
+                <rect x="1" y="2" width="14" height="1" fill="#ff5b9e"/>
+                <rect x="0" y="3" width="16" height="5" fill="#ff4f98"/>
+                <rect x="1" y="8" width="14" height="1" fill="#ff4f98"/>
+                <rect x="2" y="9" width="12" height="1" fill="#ff4f98"/>
+                <rect x="3" y="10" width="10" height="1" fill="#ff4f98"/>
+                <rect x="4" y="11" width="8" height="1" fill="#ff4f98"/>
+                <rect x="5" y="12" width="6" height="1" fill="#ff4f98"/>
+                <rect x="7" y="13" width="2" height="1" fill="#ff4f98"/>
+                <rect x="3" y="2" width="3" height="1" fill="#ffc4dc"/><rect x="2" y="3" width="2" height="2" fill="#ffb4d4"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <p class="role-title">先选一下现在是谁在想对方：</p>
+        <div class="roles">
+          <button type="button" class="role active" id="roleSS" onclick="setRole('ss')"><span class="role-icon">🐱</span><span><b>我是双双小猫</b><span>点爱心：我想刘博华了</span></span></button>
+          <button type="button" class="role" id="roleLBH" onclick="setRole('lbh')"><span class="role-icon">🐤</span><span><b>我是刘博华小鸭</b><span>点爱心：我想双双了</span></span></button>
+        </div>
+
+        <div class="stats">
+          <div class="stat cat"><label>双双小猫想刘博华小鸭</label><strong id="ssTotal">0</strong><em>今日 <span id="ssToday">0</span> 下</em></div>
+          <div class="stat duck"><label>刘博华小鸭想双双小猫</label><strong id="lbhTotal">0</strong><em>今日 <span id="lbhToday">0</span> 下</em></div>
+          <div class="stat total"><label>总想念累计</label><strong id="allTotal">0</strong><em id="comboText">第一颗心还在等你们敲亮</em></div>
+        </div>
+
+        <div class="diary">
+          <div class="diary-title"><span>MISS DIARY</span><span id="todayLabel"></span></div>
+          <div class="diary-body" id="message">还没有人敲响今天的小爱心。</div>
+          <div class="log" id="log"></div>
+        </div>
+
+        <div class="tools">
+          <button type="button" class="tool pink" onclick="copyNote()">复制今日小纸条</button>
+          <button type="button" class="tool" onclick="openSync()">双人同步说明</button>
+        </div>
+        <div class="hint">点不动通常是因为在某些 App 文件预览里脚本被禁用。这个版本把样式和脚本都塞进单个 HTML 了；下载后用手机浏览器打开，点击累计会正常生效。</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="modal-mask" id="modalMask" onclick="maskClose(event)">
+  <div class="modal">
+    <h2>双人实时同步说明</h2>
+    <p>现在这个文件是“本地可玩版”：同一台手机会一直累计。要让你和刘博华不同手机实时看到彼此点击，需要把同一个网页部署到线上，并接 Firebase / Supabase 的云数据库。</p>
+    <code>{
+  roomId: "shuangshuang-liubohua",
+  ss: { total: 0, today: 0 },
+  lbh: { total: 0, today: 0 },
+  last: "双双小猫刚刚想刘博华小鸭了"
+}</code>
+    <button type="button" class="tool pink" onclick="closeSync()">知道啦</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var STORAGE_KEY = 'miss-you-cat-duck-pinkblue-v1';
+  var ROLE_KEY = 'miss-you-cat-duck-role';
+  var lastTapAt = 0;
+  var role = localStorage.getItem(ROLE_KEY) || 'ss';
+  var palette = ['#ff4f98','#ff78b4','#88ccff','#66b9ff','#ffd75b','#b5f0ff'];
+  var lines = {
+    ss:[
+      '双双小猫敲了一下：我想刘博华小鸭了。',
+      '喵——双双把一颗粉色想念放进小屋。',
+      '双双小猫的爱心亮起来，偷偷飞向刘博华。',
+      '今天的小猫也很想很想小鸭。'
+    ],
+    lbh:[
+      '刘博华小鸭敲了一下：我想双双小猫了。',
+      '嘎——刘博华把一颗蓝色想念放进小屋。',
+      '小鸭的爱心亮起来，正在找双双小猫。',
+      '刘博华小鸭刚刚偷偷想双双了。'
+    ]
+  };
+
+  function $(id){ return document.getElementById(id); }
+  function todayKey(){ return new Date().toISOString().slice(0,10); }
+  function todayCN(){
+    var d = new Date();
+    return (d.getMonth()+1) + '月' + d.getDate() + '日';
+  }
+  function defaults(){
+    return {date: todayKey(), ss:{total:0,today:0}, lbh:{total:0,today:0}, events:[]};
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORAGE_KEY);
+      var s = raw ? JSON.parse(raw) : defaults();
+      if(!s.ss) s.ss = {total:0,today:0};
+      if(!s.lbh) s.lbh = {total:0,today:0};
+      if(!Array.isArray(s.events)) s.events = [];
+      if(s.date !== todayKey()){
+        s.date = todayKey();
+        s.ss.today = 0;
+        s.lbh.today = 0;
+        s.events = [];
+      }
+      return s;
+    }catch(e){ return defaults(); }
+  }
+  var state = load();
+  function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  window.setRole = function(next){
+    role = next === 'lbh' ? 'lbh' : 'ss';
+    localStorage.setItem(ROLE_KEY, role);
+    $('roleSS').classList.toggle('active', role === 'ss');
+    $('roleLBH').classList.toggle('active', role === 'lbh');
+    showToast(role === 'ss' ? '现在是双双小猫在想他' : '现在是刘博华小鸭在想你');
+  };
+
+  window.tapMiss = function(ev){
+    if(ev && ev.type === 'touchend') ev.preventDefault();
+    var now = Date.now();
+    if(now - lastTapAt < 220) return;
+    lastTapAt = now;
+    if(state.date !== todayKey()) state = defaults();
+
+    state[role].total += 1;
+    state[role].today += 1;
+    var msgList = lines[role];
+    var text = msgList[Math.floor(Math.random()*msgList.length)];
+    var time = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+    state.events.unshift({role:role,text:text,time:time});
+    state.events = state.events.slice(0,24);
+    save();
+    render();
+    animate(ev);
+    showToast('+1 想念已经敲进小屋啦');
+  };
+
+  function render(){
+    $('todayLabel').textContent = todayCN();
+    $('ssTotal').textContent = state.ss.total;
+    $('ssToday').textContent = state.ss.today;
+    $('lbhTotal').textContent = state.lbh.total;
+    $('lbhToday').textContent = state.lbh.today;
+    var total = state.ss.total + state.lbh.total;
+    $('allTotal').textContent = total;
+    $('comboText').textContent = total === 0 ? '第一颗心还在等你们敲亮' : (state.ss.today > 0 && state.lbh.today > 0 ? '今日双向奔赴成功 ♡' : '今天的小屋已经亮起来了');
+    $('message').textContent = state.events[0] ? state.events[0].text : '还没有人敲响今天的小爱心。';
+    var html = '';
+    for(var i=0;i<Math.min(state.events.length,8);i++){
+      html += '<div class="log-item">' + escapeHtml(state.events[i].time + ' · ' + state.events[i].text) + '</div>';
+    }
+    $('log').innerHTML = html;
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"]/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch];});
+  }
+
+  function animate(ev){
+    var btn = $('heartBtn');
+    var svg = $('heartSvg');
+    var color = palette[Math.floor(Math.random()*palette.length)];
+    var rects = svg.querySelectorAll('rect');
+    for(var i=0;i<rects.length;i++){
+      if(i > 1 && Math.random() > .18) rects[i].setAttribute('fill', color);
+    }
+    btn.classList.remove('lit');
+    void btn.offsetWidth;
+    btn.classList.add('lit');
+    setTimeout(function(){btn.classList.remove('lit');},420);
+
+    var box = btn.getBoundingClientRect();
+    var x = (ev && (ev.clientX || (ev.changedTouches && ev.changedTouches[0] && ev.changedTouches[0].clientX))) || box.left + box.width/2;
+    var y = (ev && (ev.clientY || (ev.changedTouches && ev.changedTouches[0] && ev.changedTouches[0].clientY))) || box.top + box.height/2;
+    for(var j=0;j<13;j++) makeFloat(x + Math.random()*56-28, y + Math.random()*30-15);
+  }
+
+  function makeFloat(x,y){
+    var el = document.createElement('span');
+    el.className = 'floaty';
+    var things = ['♥','♡','✦','✧','+1','喵','嘎'];
+    el.textContent = things[Math.floor(Math.random()*things.length)];
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.color = palette[Math.floor(Math.random()*palette.length)];
+    el.style.setProperty('--dx',(Math.random()*100-50)+'px');
+    $('floatLayer').appendChild(el);
+    setTimeout(function(){el.remove();},980);
+  }
+
+  window.copyNote = function(){
+    var text = '今日想念小纸条\n双双小猫想刘博华小鸭：' + state.ss.today + ' 下\n刘博华小鸭想双双小猫：' + state.lbh.today + ' 下\n总想念累计：' + (state.ss.total + state.lbh.total) + ' 下';
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){showToast('今日小纸条复制好啦');}).catch(function(){showToast(text);});
+    }else{
+      showToast(text);
+    }
+  };
+  window.openSync = function(){ $('modalMask').classList.add('show'); };
+  window.closeSync = function(){ $('modalMask').classList.remove('show'); };
+  window.maskClose = function(ev){ if(ev.target && ev.target.id === 'modalMask') closeSync(); };
+
+  function showToast(text){
+    var t = $('toast');
+    t.textContent = text;
+    t.classList.add('show');
+    clearTimeout(showToast.timer);
+    showToast.timer = setTimeout(function(){t.classList.remove('show');},1550);
+  }
+
+  window.addEventListener('pageshow',function(){ state = load(); render(); });
+  $('roleSS').classList.toggle('active', role === 'ss');
+  $('roleLBH').classList.toggle('active', role === 'lbh');
+  render();
+})();
+</script>
+</body>
+</html>
