@@ -291,6 +291,7 @@
         <div class="tools">
           <button type="button" class="tool pink" onclick="copyNote()">复制今日小纸条</button>
           <button type="button" class="tool" onclick="openSync()">双人同步说明</button>
+          <button type="button" class="tool pink" id="resetAllBtn">清零全部次数</button>
         </div>
         <div class="hint">这个版本已经接入 Firebase。上传到 GitHub Pages 后，你和刘博华打开同一个网址，点击次数会同步。每日次数按中国时间 00:00 刷新。</div>
       </div>
@@ -303,7 +304,7 @@
     <h2>双人实时同步说明</h2>
     <p>现在这个文件已经接入 Firebase：你和刘博华打开同一个网址，点爱心后会同步到同一个云数据库。每日次数按中国时间 00:00 刷新，总次数永久累计。</p>
     <code>{
-  roomId: "shuangshuang-liubohua",
+  roomId: "jiayin-liubohua",
   ss: { total: 0, today: 0 },
   lbh: { total: 0, today: 0 },
   last: "佳音小猫刚刚想刘博华小鸭了"
@@ -339,6 +340,7 @@ import { getDatabase, ref, onValue, set, update, runTransaction } from "https://
   var role = localStorage.getItem(ROLE_KEY) || 'ss';
   var state = defaults();
   var palette = ['#ff4f98','#ff78b4','#88ccff','#66b9ff','#ffd75b','#b5f0ff'];
+  var resetConfirmTimer = null;
   var lines = {
     ss:[
       '佳音小猫敲了一下：我想刘博华小鸭了。',
@@ -564,6 +566,37 @@ import { getDatabase, ref, onValue, set, update, runTransaction } from "https://
     }
   };
 
+  function resetAllCounts(){
+    set(roomRef, {
+      date: todayKey(),
+      ss: { total: 0, today: 0 },
+      lbh: { total: 0, today: 0 },
+      events: [{
+        role: 'system',
+        text: '想念小屋已经重新开始计数啦。',
+        time: chinaTime(),
+        ts: Date.now()
+      }],
+      lastUpdated: Date.now()
+    }).then(function(){
+      var resetBtn = $('resetAllBtn');
+      if(resetBtn){
+        resetBtn.dataset.confirming = '0';
+        resetBtn.textContent = '清零全部次数';
+      }
+      showToast('全部次数已经清零啦');
+    }).catch(function(error){
+      var resetBtn = $('resetAllBtn');
+      if(resetBtn){
+        resetBtn.dataset.confirming = '0';
+        resetBtn.textContent = '清零全部次数';
+      }
+      showToast('清零失败：' + error.message);
+    });
+  }
+
+  window.manualResetAll = resetAllCounts;
+
   window.openSync = function(){
     showToast('已经接入 Firebase，同一个网址打开就能同步啦');
   };
@@ -587,6 +620,28 @@ import { getDatabase, ref, onValue, set, update, runTransaction } from "https://
 
   $('roleSS').classList.toggle('active', role === 'ss');
   $('roleLBH').classList.toggle('active', role === 'lbh');
+
+  var resetBtn = $('resetAllBtn');
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      if(resetBtn.dataset.confirming === '1'){
+        resetBtn.dataset.confirming = '0';
+        clearTimeout(resetConfirmTimer);
+        resetBtn.textContent = '清零中...';
+        resetAllCounts();
+        return;
+      }
+      resetBtn.dataset.confirming = '1';
+      resetBtn.textContent = '再点一次确认清零';
+      showToast('再点一次按钮，就会清零全部次数');
+      clearTimeout(resetConfirmTimer);
+      resetConfirmTimer = setTimeout(function(){
+        resetBtn.dataset.confirming = '0';
+        resetBtn.textContent = '清零全部次数';
+      }, 5000);
+    });
+  }
+
   render();
 })();
 </script>
